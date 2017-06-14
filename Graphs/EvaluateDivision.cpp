@@ -65,9 +65,23 @@ public:
             unordered_map<string,unordered_map<string, double>> &m,
             unordered_set<string> &s)
     {
+        // We need base case for our recursion to exit. So base case can be when lets us
+        // say up is b and down is c and there is a mapping from b to c, then we just return
+        // the value.
         if(m[up].find(down) != m[up].end()) return m[up][down];
         for (auto i : m[up])
         {
+            // IMP - for a/b, we store two mappings in the map, one with key a and one with
+            // key b. In the same example, let us say we are finding a/c now we first get 
+            // b as mapping of a, but then b has mapping to a and c both and if we keep on
+            // calling "check", then b will again call check with "up" a sa and hence will
+            // result into a never ending cycle. This is like a depth first search, to avoid
+            // this cycle for one particular query execution, we need to make sure that 
+            // we call "check" only for unvisited nodes and hence we check the below condition
+            // first.
+            // TODO - set can be a complex ds here, try using a simple visited[] kind of array.
+            // we dont have indexes rather we have nodes named as a and b, so we can consider
+            // a as 0 and so on.
             if(s.find(i.first) == s.end())
             {
                 s.insert(i.first);
