@@ -71,6 +71,10 @@ public:
             if(s.find(i.first) == s.end())
             {
                 s.insert(i.first);
+                // This is a perfect case for a recursion because let us say we need to find
+                // a/c, we checked a and found that a is connected to b, now we need to see 
+                // if b is connected to c or not, so we again need to "check" and this time
+                // "up" becomes b.
                 double tmp = check(i.first,down,m,s);
                 if(tmp) return i.second*tmp;
             }
